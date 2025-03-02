@@ -9,7 +9,7 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'class_id', 'section', 'roll_number', 'date_of_birth', 'parent_id', 'address', 'phone', 'admission_date'];
+    protected $fillable = ['name', 'user_id', 'class_id', 'section', 'roll_number', 'date_of_birth', 'parent_id', 'address', 'phone', 'admission_date'];
 
     public function user()
     {
@@ -35,4 +35,17 @@ class Student extends Model
     {
         return $this->hasMany(Fee::class);
     }
+
+    protected static function boot()
+{
+    parent::boot();
+
+    // Automatically delete the associated user when a student is deleted
+    static::deleting(function ($student) {
+        if ($student->user_id) {
+            User::find($student->user_id)->delete(); // Delete the related user account
+        }
+    });
+}
+
 }

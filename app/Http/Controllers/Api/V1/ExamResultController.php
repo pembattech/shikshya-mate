@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Api\V1\Controllers;
 
-use App\Http\Requests\StoreAttendanceRequest;
-use App\Http\Requests\UpdateAttendanceRequest;
-use App\Models\Attendance;
+use App\Http\Requests\V1\StoreExam_ResultRequest;
+use App\Http\Requests\V1\UpdateExam_ResultRequest;
+use App\Models\Exam_Result;
 
-class AttendanceController extends Controller
+class ExamResultController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class AttendanceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAttendanceRequest $request)
+    public function store(StoreExam_ResultRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class AttendanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Attendance $attendance)
+    public function show(Exam_Result $exam_Result)
     {
         //
     }
@@ -43,7 +43,7 @@ class AttendanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Attendance $attendance)
+    public function edit(Exam_Result $exam_Result)
     {
         //
     }
@@ -51,7 +51,7 @@ class AttendanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAttendanceRequest $request, Attendance $attendance)
+    public function update(UpdateExam_ResultRequest $request, Exam_Result $exam_Result)
     {
         //
     }
@@ -59,7 +59,7 @@ class AttendanceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Attendance $attendance)
+    public function destroy(Exam_Result $exam_Result)
     {
         //
     }

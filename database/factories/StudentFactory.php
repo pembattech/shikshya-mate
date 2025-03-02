@@ -11,6 +11,7 @@ class StudentFactory extends Factory
         return [
             'user_id' => \App\Models\User::factory()->create(['role' => 'student'])->id,
             'class_id' => \App\Models\Classroom::factory(),
+            'name' => $this->faker->name,
             'section' => $this->faker->randomElement(['A', 'B', 'C']),
             'roll_number' => $this->faker->unique()->randomNumber(6),
             'date_of_birth' => $this->faker->date,

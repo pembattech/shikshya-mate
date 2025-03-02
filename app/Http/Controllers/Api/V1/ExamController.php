@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Api\V1\Controllers;
 
-use App\Http\Requests\StoreStudentRequest;
-use App\Http\Requests\UpdateStudentRequest;
-use App\Models\Student;
+use App\Http\Requests\V1\StoreExamRequest;
+use App\Http\Requests\V1\UpdateExamRequest;
+use App\Models\Exam;
 
-class StudentController extends Controller
+class ExamController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStudentRequest $request)
+    public function store(StoreExamRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show(Exam $exam)
     {
         //
     }
@@ -43,7 +43,7 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit(Exam $exam)
     {
         //
     }
@@ -51,7 +51,7 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStudentRequest $request, Student $student)
+    public function update(UpdateExamRequest $request, Exam $exam)
     {
         //
     }
@@ -59,7 +59,7 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(Exam $exam)
     {
         //
     }

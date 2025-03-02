@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Api\V1\Controllers;
 
-use App\Http\Requests\StoreSubjectRequest;
-use App\Http\Requests\UpdateSubjectRequest;
-use App\Models\Subject;
+use App\Http\Requests\V1\StoreNotificationRequest;
+use App\Http\Requests\V1\UpdateNotificationRequest;
+use App\Models\Notification;
 
-class SubjectController extends Controller
+class NotificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class SubjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSubjectRequest $request)
+    public function store(StoreNotificationRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class SubjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Subject $subject)
+    public function show(Notification $notification)
     {
         //
     }
@@ -43,7 +43,7 @@ class SubjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Subject $subject)
+    public function edit(Notification $notification)
     {
         //
     }
@@ -51,7 +51,7 @@ class SubjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSubjectRequest $request, Subject $subject)
+    public function update(UpdateNotificationRequest $request, Notification $notification)
     {
         //
     }
@@ -59,7 +59,7 @@ class SubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Subject $subject)
+    public function destroy(Notification $notification)
     {
         //
     }
