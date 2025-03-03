@@ -25,10 +25,13 @@ class StoreStudentRequest extends FormRequest
             'user_id' => 'nullable|integer|exists:users,id',
             'class_id' => 'required|exists:classrooms,id',
             'name' => 'required|string|max:255',
-            'section' => 'required|string|max:1', // Assuming section is a single letter
+            'section' => 'required|string|max:1',
             'roll_number' => 'required|string|max:20',
             'date_of_birth' => 'required|date',
-            'parent_id' => 'nullable|exists:users,id', // Assuming parent is also a user
+            'parent_id' => 'nullable|exists:users,id',
+            'father_name' => 'required|string|max:255',
+            'mother_name' => 'required|string|max:255',
+            'occupation' => 'required|string|max:255',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:15',
             'admission_date' => 'required|date',
@@ -49,7 +52,9 @@ class StoreStudentRequest extends FormRequest
             'roll_number.required' => 'Roll number is required.',
             'date_of_birth.required' => 'Date of birth is required.',
             'admission_date.required' => 'Admission date is required.',
-            // Add other custom messages as needed
+            'father_name.required' => 'Father_name is required',
+            'mother_name.required' => 'Mother_name is required',
+            'occupation.required' => 'Occupation is required',
         ];
     }
 }
