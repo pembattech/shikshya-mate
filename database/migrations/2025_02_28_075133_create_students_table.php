@@ -16,6 +16,9 @@ return new class extends Migration {
             $table->string('roll_number')->unique();
             $table->date('date_of_birth');
             $table->foreignId('parent_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->string('father_name')->nullable();
+            $table->string('mother_name')->nullable();
+            $table->string('occupation')->nullable();
             $table->string('address');
             $table->string('phone');
             $table->date('admission_date');
