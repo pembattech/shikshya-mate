@@ -9,10 +9,12 @@ return new class extends Migration {
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('subject')->nullable();
+            $table->string('name');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->string('subject');
             $table->string('phone');
             $table->string('address');
+            $table->string('position')->default('teacher');
             $table->date('hire_date');
             $table->timestamps();
         });

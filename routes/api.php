@@ -10,6 +10,7 @@ Route::get('/user', function (Request $request) {
 
 
 use App\Http\Controllers\Api\V1\StudentController;
+use App\Http\Controllers\Api\V1\TeacherController;
 
 Route::prefix('v1')->group(function () {
     Route::get('/students', [StudentController::class, 'index']);
@@ -19,4 +20,12 @@ Route::prefix('v1')->group(function () {
     Route::patch('/students/{student}', [StudentController::class, 'update']);
     Route::delete('/students/{student}', [StudentController::class, 'destroy']);
     Route::post('/students/{studentId}/create-user', [StudentController::class, 'createUserAccount']);
+
+    Route::get('/teachers', [TeacherController::class, 'index']); // Get all teachers (paginated)
+    Route::post('/teachers', [TeacherController::class, 'store']); // Create a new teacher
+    Route::get('/teachers/{id}', [TeacherController::class, 'show']); // Get a specific teacher
+    Route::put('/teachers/{id}', [TeacherController::class, 'update']); // Update a teacher
+    Route::patch('/teachers/{id}', [TeacherController::class, 'update']); // Partial update
+    Route::delete('/teachers/{id}', [TeacherController::class, 'destroy']); // Delete a teacher
+    Route::post('/teachers/{id}/create-user', [TeacherController::class, 'createTeacherAccount']);
 });

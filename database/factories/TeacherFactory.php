@@ -17,10 +17,12 @@ class TeacherFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => \App\Models\User::factory()->create(['role' => 'student'])->id,
+            'name' => $this->faker->name(),
+            'user_id' => \App\Models\User::factory()->create(['role' => 'teacher'])->id,
             'subject' => $this->faker->randomElement(['Math', 'Science', 'English', 'History', 'Geography']),
             'phone' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
+            'position' => $this->faker->randomElement(['Principal', 'Assistant Teacher', 'Substitute Teacher']),
             'hire_date' => $this->faker->date(),
         ];
     }
