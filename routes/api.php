@@ -11,6 +11,8 @@ Route::get('/user', function (Request $request) {
 
 use App\Http\Controllers\Api\V1\StudentController;
 use App\Http\Controllers\Api\V1\TeacherController;
+use App\Http\Controllers\Api\V1\SubjectController;
+use App\Http\Controllers\Api\V1\ClassroomController;
 
 Route::prefix('v1')->group(function () {
     Route::get('/students', [StudentController::class, 'index']);
@@ -28,4 +30,12 @@ Route::prefix('v1')->group(function () {
     Route::patch('/teachers/{id}', [TeacherController::class, 'update']); // Partial update
     Route::delete('/teachers/{id}', [TeacherController::class, 'destroy']); // Delete a teacher
     Route::post('/teachers/{id}/create-user', [TeacherController::class, 'createTeacherAccount']);
+
+    Route::get('/subjects', [SubjectController::class, 'index']);
+    Route::post('/subjects', [SubjectController::class, 'store']);
+    Route::get('/subjects/{id}', [SubjectController::class, 'show']);
+    Route::put('/subjects/{id}', [SubjectController::class, 'update']);
+    Route::patch('/subjects/{id}', [SubjectController::class, 'update']);
+    Route::delete('/subjects/{id}', [SubjectController::class, 'destroy']);
+
 });
