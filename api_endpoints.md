@@ -313,3 +313,223 @@ Here are all the **API endpoints**:
   ```
 
 ---
+---
+
+## **🔹 Subject Endpoints (CRUD)**  
+
+### **1️⃣ Get All Subjects**  
+- **Method:** `GET`  
+- **Endpoint:** `/api/v1/subjects`  
+- **Description:** Fetches a paginated list of subjects.  
+
+#### ✅ **Success Response (200)**
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Mathematics",
+            "class_id": 2,
+            "teacher_id": 5
+        },
+        {
+            "id": 2,
+            "name": "Science",
+            "class_id": 3,
+            "teacher_id": 6
+        }
+    ],
+    "links": {
+        "first": "http://example.com/api/v1/subjects?page=1",
+        "last": "http://example.com/api/v1/subjects?page=5",
+        "prev": null,
+        "next": "http://example.com/api/v1/subjects?page=2"
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 5,
+        "path": "http://example.com/api/v1/subjects",
+        "per_page": 10,
+        "to": 10,
+        "total": 50
+    }
+}
+```
+
+#### ❌ **If No Subjects Found (200)**
+```json
+{
+    "message": "No subjects found."
+}
+```
+
+---
+
+### **2️⃣ Create a New Subject**  
+- **Method:** `POST`  
+- **Endpoint:** `/api/v1/subjects`  
+- **Description:** Creates a new subject.  
+
+#### **🔹 Request Payload**
+```json
+{
+    "name": "Physics",
+    "class_id": 2,
+    "teacher_id": 5
+}
+```
+
+#### ✅ **Success Response (201)**
+```json
+{
+    "message": "Subject created successfully",
+    "subject": {
+        "id": 10,
+        "name": "Physics",
+        "class_id": 2,
+        "teacher_id": 5
+    }
+}
+```
+
+#### ❌ **Validation Error (422)**
+```json
+{
+    "message": "Validation failed",
+    "errors": {
+        "name": ["The name field is required."],
+        "class_id": ["The selected class does not exist."]
+    }
+}
+```
+
+#### ❌ **Database Error (500)**
+```json
+{
+    "message": "Database error occurred",
+    "error": "SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update..."
+}
+```
+
+---
+
+### **3️⃣ Get a Specific Subject**  
+- **Method:** `GET`  
+- **Endpoint:** `/api/v1/subjects/{id}`  
+- **Description:** Fetches details of a subject by ID.  
+
+#### ✅ **Success Response (200)**
+```json
+{
+    "id": 1,
+    "name": "Mathematics",
+    "class": {
+        "id": 2,
+        "name": "Class 10"
+    },
+    "teacher": {
+        "id": 5,
+        "name": "Mr. Sharma"
+    }
+}
+```
+
+#### ❌ **Subject Not Found (404)**
+```json
+{
+    "message": "The subject with ID 100 was not found."
+}
+```
+
+---
+
+### **4️⃣ Update a Subject**  
+- **Method:** `PUT` or `PATCH`  
+- **Endpoint:** `/api/v1/subjects/{id}`  
+- **Description:** Updates an existing subject record.  
+
+#### **🔹 Request Payload**
+```json
+{
+    "name": "Advanced Mathematics",
+    "class_id": 2,
+    "teacher_id": 7
+}
+```
+
+#### ✅ **Success Response (200)**
+```json
+{
+    "message": "Subject updated successfully!",
+    "data": {
+        "id": 1,
+        "name": "Advanced Mathematics",
+        "class_id": 2,
+        "teacher_id": 7
+    }
+}
+```
+
+#### ❌ **Validation Error (422)**
+```json
+{
+    "message": "Validation failed.",
+    "errors": {
+        "class_id": ["The selected class does not exist."]
+    }
+}
+```
+
+#### ❌ **Subject Not Found (404)**
+```json
+{
+    "message": "The subject with ID 100 was not found."
+}
+```
+
+---
+
+### **5️⃣ Delete a Subject**  
+- **Method:** `DELETE`  
+- **Endpoint:** `/api/v1/subjects/{id}`  
+- **Description:** Deletes a specific subject.  
+
+#### ✅ **Success Response (200)**
+```json
+{
+    "message": "Subject deleted successfully"
+}
+```
+
+#### ❌ **Subject Not Found (404)**
+```json
+{
+    "message": "The subject with ID 100 was not found."
+}
+```
+
+#### ❌ **Unexpected Error (500)**
+```json
+{
+    "message": "An unexpected error occurred",
+    "error": "SQLSTATE[23000]: Cannot delete due to foreign key constraint..."
+}
+```
+
+---
+
+### **✅ Summary of API Endpoints**  
+
+| Method  | Endpoint                | Description                         |
+|---------|-------------------------|-------------------------------------|
+| `GET`   | `/api/v1/subjects`      | Fetch all subjects (paginated)     |
+| `POST`  | `/api/v1/subjects`      | Create a new subject               |
+| `GET`   | `/api/v1/subjects/{id}` | Get a specific subject by ID       |
+| `PUT`   | `/api/v1/subjects/{id}` | Update a subject                   |
+| `DELETE`| `/api/v1/subjects/{id}` | Delete a subject                   |
+
+---
+---
+---
+
