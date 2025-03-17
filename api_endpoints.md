@@ -38,7 +38,7 @@ Here are all the **API endpoints**:
     | Parameter | Type     | Description                               | Example      |
     | --------- | -------- | ----------------------------------------- | ------------ |
     | `class`   | `string` | Filters students by class (exact match)   | `?class=10`  |
-    | `section` | `string` | Filters students by section (exact match) | `?section=A` |
+    | `section` | `integer` | Filters students by section (exact match) | `?section=1` |
 
     ##### **Example Requests:**
 
@@ -52,7 +52,7 @@ Here are all the **API endpoints**:
         ```
     -   **Filter by class and section:**
         ```
-        GET /api/v1/students?class=10&section=A
+        GET /api/v1/students?class=10&section=1
         ```
 
     ##### **Response:**
