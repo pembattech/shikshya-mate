@@ -21,8 +21,7 @@ class ClassroomFactory extends Factory
     public function definition(): array
     {
         return [
-            'class_name' => 'Class ' . $this->faker->numberBetween(1, 12),
-            'teacher_id' => Teacher::factory(), // Auto-create a Teacher if not exists
+            'class_name' => $this->faker->unique()->numberBetween(1, 10),
         ];
     }
 }

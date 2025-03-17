@@ -19,10 +19,16 @@ class SubjectFactory extends Factory
      */
     public function definition(): array
     {
+        $subjects = [
+            'Mathematics',
+            'Science',
+            'English',
+            'History',
+            'Geography',
+        ];
+
         return [
-            'name'       => $this->faker->word(),  // Random subject name
-            'class_id'   => Classroom::factory(), // Associate with a classroom
-            'teacher_id' => Teacher::factory(),   // Associate with a teacher
+            'subject_name' => $this->faker->randomElement($subjects),
         ];
     }
 }

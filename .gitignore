@@ -23,3 +23,5 @@ yarn-error.log
 /.zed
 
 TODO
+UI_test
+payload.json

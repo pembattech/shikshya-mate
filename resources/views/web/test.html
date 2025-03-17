@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Student Management</title>
+</head>
+<body class="p-6">
+
+    <!-- UI Section -->
+    <div class="space-y-4">
+        <!-- Filters and Inputs -->
+        <div class="flex flex-wrap gap-4 items-center">
+            <select id="classSelect" class="border p-2 rounded w-40">
+                <option value="">Select Class</option>
+                <option value="10">Class 10</option>
+                <option value="11">Class 11</option>
+                <option value="12">Class 12</option>
+            </select>
+
+            <select id="sectionSelect" class="border p-2 rounded w-40">
+                <option value="">Select Section</option>
+                <option value="A">Section A</option>
+                <option value="B">Section B</option>
+                <option value="C">Section C</option>
+            </select>
+
+            <input type="text" id="searchInput" placeholder="Search by name or roll" class="border p-2 rounded w-40">
+            
+            <select id="sortOrder" class="border p-2 rounded">
+                <option value="name-asc">Order By Name (A-Z)</option>
+                <option value="name-desc">Order By Name (Z-A)</option>
+                <option value="roll-asc">Order By Roll No (Ascending)</option>
+                <option value="roll-desc">Order By Roll No (Descending)</option>
+                <option value="status-asc">Order By Status (Active First)</option>
+                <option value="status-desc">Order By Status (Inactive First)</option>
+            </select>
+        </div>
+
+        <!-- Table to Show Data -->
+        <div id="studentTableContainer" class="hidden border rounded p-4 shadow-md mt-4">
+            <h2 class="font-semibold text-lg mb-3">
+                Student List - Class <span id="selectedClass"></span>, Section <span id="selectedSection"></span>
+            </h2>
+            <table class="w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border border-gray-300 p-2">ID</th>
+                        <th class="border border-gray-300 p-2">Name</th>
+                        <th class="border border-gray-300 p-2">Roll No</th>
+                        <th class="border border-gray-300 p-2">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- jQuery Script -->
+    <script>
+        $(document).ready(function () {
+            let students = [
+                { id: 1, name: "John Doe", roll: 10, status: "Active" },
+                { id: 2, name: "Jane Smith", roll: 11, status: "Inactive" },
+                { id: 3, name: "Michael Brown", roll: 12, status: "Active" },
+                { id: 4, name: "Emily White", roll: 13, status: "Active" },
+                { id: 5, name: "Chris Green", roll: 14, status: "Inactive" }
+            ];
+
+            function updateTable() {
+                let selectedClass = $("#classSelect").val();
+                let selectedSection = $("#sectionSelect").val();
+
+                if (selectedClass && selectedSection) {
+                    $("#selectedClass").text(selectedClass);
+                    $("#selectedSection").text(selectedSection);
+                    $("#studentTableContainer").removeClass("hidden");
+                    renderTable(students);
+                } else {
+                    $("#studentTableContainer").addClass("hidden");
+                }
+            }
+
+            function renderTable(data) {
+                let order = $("#sortOrder").val();
+                let searchTerm = $("#searchInput").val().toLowerCase();
+
+                // Sorting Logic
+                let sortedData = [...data].sort((a, b) => {
+                    if (order.includes("name")) {
+                        return order === "name-asc" ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+                    } else if (order.includes("roll")) {
+                        return order === "roll-asc" ? a.roll - b.roll : b.roll - a.roll;
+                    } else if (order.includes("status")) {
+                        return order === "status-asc" ? (a.status === "Active" ? -1 : 1) : (a.status === "Active" ? 1 : -1);
+                    }
+                    return 0;
+                });
+
+                // Search Filter (by Name or Roll No)
+                let filteredData = sortedData.filter(student => 
+                    student.name.toLowerCase().includes(searchTerm) || 
+                    student.roll.toString().includes(searchTerm)
+                );
+
+                $("#studentTableBody").html("");
+                filteredData.forEach(student => {
+                    $("#studentTableBody").append(`
+                        <tr>
+                            <td class="border border-gray-300 p-2">${student.id}</td>
+                            <td class="border border-gray-300 p-2">${student.name}</td>
+                            <td class="border border-gray-300 p-2">${student.roll}</td>
+                            <td class="border border-gray-300 p-2">${student.status}</td>
+                        </tr>
+                    `);
+                });
+            }
+
+            // Event Listeners
+            $("#classSelect, #sectionSelect").change(updateTable);
+            $("#searchInput").on("input", () => renderTable(students));
+            $("#sortOrder").change(() => renderTable(students));
+        });
+    </script>
+
+</body>
+</html>

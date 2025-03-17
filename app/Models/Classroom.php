@@ -9,6 +9,8 @@ class Classroom extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'class_id';
+    
     protected $fillable = ['class_name', 'teacher_id'];
 
     public function teacher()
@@ -18,11 +20,11 @@ class Classroom extends Model
 
     public function students()
     {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(Student::class, 'class_id');
     }
 
     public function subjects()
     {
-        return $this->hasMany(Subject::class);
+        return $this->hasMany(Subject::class, 'class_id');
     }
 }

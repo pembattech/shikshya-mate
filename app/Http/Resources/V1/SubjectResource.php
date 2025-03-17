@@ -15,12 +15,9 @@ class SubjectResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->name,
-            'classID' => $this->class_id,
-            'teacherID' => $this->teacher_id,
-            'user' => new UserResource($this->whenLoaded('teacher')),  // Relationship to Teacher
-            'classes' => new ClassroomResource($this->whenLoaded('class')),  // Relationship to Classroom
-
+            'name' => $this->subject_name,
+            'classrooms' => ClassroomResource::collection($this->whenLoaded('classrooms')), // Relationship to Classroom
+            'teachers' => TeacherResource::collection($this->whenLoaded('teachers')), // Relationship to Teacher
         ];
     }
 }

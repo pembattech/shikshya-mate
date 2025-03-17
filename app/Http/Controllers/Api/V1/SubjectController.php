@@ -69,8 +69,9 @@ class SubjectController extends Controller
     {
         try {
             $subjects = Subject::findOrFail($id);
-            $subjects->load(['class', 'teacher']);
-            // $subjects->load(relations: ['subject']);
+            // $subjects->load(['classrooms', 'teachers']);
+
+            $subjects->load(['teachers']);
 
             return new SubjectResource($subjects);
 

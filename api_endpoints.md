@@ -533,3 +533,231 @@ Here are all the **API endpoints**:
 ---
 ---
 
+Here’s a well-structured **API documentation** for the **Classroom API Endpoints** in Markdown format. This documentation includes details on each endpoint, request/response examples, and error handling.  
+
+---
+
+## **Classroom API Documentation (v1)**  
+Base URL: `/api/v1/classrooms`
+
+### **1. Get All Classrooms**  
+Fetch a paginated list of classrooms.
+
+#### **Endpoint:**  
+```http
+GET /api/v1/classrooms
+```
+
+#### **Response Example (200 - Success)**
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "class_name": "Grade 10",
+            "teacher_id": 5,
+            "created_at": "2024-03-05T10:00:00Z",
+            "updated_at": "2024-03-05T10:00:00Z"
+        },
+        {
+            "id": 2,
+            "class_name": "Grade 12",
+            "teacher_id": 8,
+            "created_at": "2024-03-05T10:05:00Z",
+            "updated_at": "2024-03-05T10:05:00Z"
+        }
+    ],
+    "links": { /* Pagination Links */ },
+    "meta": { /* Pagination Metadata */ }
+}
+```
+
+#### **Error Responses**
+- **404 Not Found** (if no classrooms exist)
+```json
+{
+    "message": "No classrooms found."
+}
+```
+
+---
+
+### **2. Create a Classroom**  
+Creates a new classroom.
+
+#### **Endpoint:**  
+```http
+POST /api/v1/classrooms
+```
+
+#### **Request Body (JSON)**
+```json
+{
+    "class_name": "Grade 11",
+    "teacher_id": 7
+}
+```
+
+#### **Response Example (201 - Created)**
+```json
+{
+    "message": "Classroom created successfully",
+    "student": {
+        "id": 3,
+        "class_name": "Grade 11",
+        "teacher_id": 7,
+        "created_at": "2024-03-05T11:00:00Z",
+        "updated_at": "2024-03-05T11:00:00Z"
+    }
+}
+```
+
+#### **Error Responses**
+- **422 Unprocessable Entity** (Validation error)
+```json
+{
+    "message": "Validation failed",
+    "errors": {
+        "class_name": ["The class name field is required."]
+    }
+}
+```
+- **500 Internal Server Error** (Database issues)
+```json
+{
+    "message": "Database error occurred",
+    "error": "SQLSTATE[23000]: Integrity constraint violation..."
+}
+```
+
+---
+
+### **3. Get a Specific Classroom**  
+Retrieve details of a specific classroom by ID.
+
+#### **Endpoint:**  
+```http
+GET /api/v1/classrooms/{id}
+```
+
+#### **Response Example (200 - Success)**
+```json
+{
+    "id": 1,
+    "class_name": "Grade 10",
+    "teacher_id": 5,
+    "created_at": "2024-03-05T10:00:00Z",
+    "updated_at": "2024-03-05T10:00:00Z"
+}
+```
+
+#### **Error Responses**
+- **404 Not Found** (If the classroom ID does not exist)
+```json
+{
+    "message": "The classroom with ID 99 was not found."
+}
+```
+
+---
+
+### **4. Update a Classroom**  
+Update classroom details.
+
+#### **Endpoint:**  
+```http
+PUT /api/v1/classrooms/{id}
+```
+
+#### **Request Body (JSON)**
+```json
+{
+    "class_name": "Grade 10 - Science",
+    "teacher_id": 6
+}
+```
+
+#### **Response Example (200 - Success)**
+```json
+{
+    "message": "Classroom updated successfully!",
+    "data": {
+        "id": 1,
+        "class_name": "Grade 10 - Science",
+        "teacher_id": 6,
+        "created_at": "2024-03-05T10:00:00Z",
+        "updated_at": "2024-03-05T12:00:00Z"
+    }
+}
+```
+
+#### **Error Responses**
+- **422 Unprocessable Entity** (Validation error)
+```json
+{
+    "message": "Validation failed",
+    "errors": {
+        "teacher_id": ["The teacher_id field must be an integer."]
+    }
+}
+```
+- **404 Not Found** (If the classroom ID does not exist)
+```json
+{
+    "message": "The classroom with ID 99 was not found."
+}
+```
+- **500 Internal Server Error**  
+```json
+{
+    "message": "An unexpected error occurred",
+    "error": "Database connection failed"
+}
+```
+
+---
+
+### **5. Delete a Classroom**  
+Deletes a classroom by ID.
+
+#### **Endpoint:**  
+```http
+DELETE /api/v1/classrooms/{id}
+```
+
+#### **Response Example (200 - Success)**
+```json
+{
+    "message": "Classroom deleted successfully"
+}
+```
+
+#### **Error Responses**
+- **404 Not Found**  
+```json
+{
+    "message": "The classroom with ID 99 was not found."
+}
+```
+- **500 Internal Server Error**  
+```json
+{
+    "message": "An unexpected error occurred",
+    "error": "Database transaction error"
+}
+```
+
+---
+
+### **Summary of Endpoints**
+| Method | Endpoint | Description |
+|--------|---------|-------------|
+| **GET** | `/api/v1/classrooms` | Get a list of classrooms (paginated) |
+| **POST** | `/api/v1/classrooms` | Create a new classroom |
+| **GET** | `/api/v1/classrooms/{id}` | Get details of a specific classroom |
+| **PUT** | `/api/v1/classrooms/{id}` | Update a classroom's details |
+| **DELETE** | `/api/v1/classrooms/{id}` | Delete a classroom |
+
+---
+
+This API documentation follows RESTful conventions and includes proper request/response handling. Let me know if you need any modifications! 🚀

@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Classroom;
+use App\Models\Section;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class StudentFactory extends Factory
@@ -9,19 +12,16 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => \App\Models\User::factory()->create(['role' => 'student'])->id,
-            'class_id' => \App\Models\Classroom::factory(),
-            'name' => $this->faker->name,
-            'section' => $this->faker->randomElement(['A', 'B', 'C']),
-            'roll_number' => $this->faker->unique()->randomNumber(6),
-            'date_of_birth' => $this->faker->date,
-            'parent_id' => \App\Models\User::factory()->create(['role' => 'parent'])->id,
-            'father_name' => $this->faker->name,
-            'mother_name' => $this->faker->name,
-            'occupation' => $this->faker->name,
+            'user_id' => User::factory(),
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'date_of_birth' => $this->faker->date(),
+            'class_id' => $this->faker->numberBetween(1, 10),
+            'section_id' => Section::factory(),
+            'roll_number' => $this->faker->numerify('###'),
             'address' => $this->faker->address,
             'phone' => $this->faker->phoneNumber,
-            'admission_date' => $this->faker->date,
+            'admission_date' => $this->faker->date(),
         ];
     }
 }

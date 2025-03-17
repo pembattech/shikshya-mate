@@ -70,7 +70,7 @@ class TeacherController extends Controller
     {
         try {
             $teacher = Teacher::findOrFail($id);
-            $teacher->load(['user', 'classes']);
+            $teacher->load(['user', 'classes', 'subjects']);
 
             return new TeacherResource($teacher);
 

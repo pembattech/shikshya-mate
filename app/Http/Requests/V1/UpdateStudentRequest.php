@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Requests\V1;
 
@@ -25,16 +25,13 @@ class UpdateStudentRequest extends FormRequest
     {
         // PUT: Requires all fields (full update)
         return [
-            'user_id' => 'nullable|integer|exists:users,id',
-            'class_id' => 'required|exists:classrooms,id',
-            'name' => 'required|string|max:255',
-            'section' => 'required|string|max:1',
-            'roll_number' => 'required|string|max:20|unique:students,roll_number,' . $this->student,
+            'user_id' => 'nullable|integer|exists:users,user_id',
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
             'date_of_birth' => 'required|date',
-            'parent_id' => 'nullable|exists:users,id',
-            'father_name' => 'required|string|max:255',
-            'mother_name' => 'required|string|max:255',
-            'occupation' => 'required|string|max:255',
+            'class_id' => 'required|exists:classrooms,class_id',
+            'section_id' => 'required|exists:sections,section_id',
+            'roll_number' => 'required|string|max:20|unique:students,roll_number,' . $this->student,
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:15',
             'admission_date' => 'required|date',
@@ -45,16 +42,13 @@ class UpdateStudentRequest extends FormRequest
     {
         // PATCH: Allows partial update (only sent fields will be validated)
         return [
-            'user_id' => 'sometimes|nullable|integer|exists:users,id',
-            'class_id' => 'sometimes|required|exists:classrooms,id',
-            'name' => 'sometimes|required|string|max:255',
-            'section' => 'sometimes|required|string|max:1',
-            'roll_number' => 'sometimes|required|string|max:20|unique:students,roll_number,' . $this->student,
+            'user_id' => 'sometimes|nullable|integer|exists:users,user_id',
+            'first_name' => 'sometimes|required|string|max:50',
+            'last_name' => 'sometimes|required|string|max:50',
             'date_of_birth' => 'sometimes|required|date',
-            'parent_id' => 'sometimes|nullable|exists:users,id',
-            'father_name' => 'required|string|max:255',
-            'mother_name' => 'required|string|max:255',
-            'occupation' => 'required|string|max:255',
+            'class_id' => 'sometimes|required|exists:classrooms,class_id',
+            'section_id' => 'sometimes|required|exists:sections,section_id',
+            'roll_number' => 'sometimes|required|string|max:20|unique:students,roll_number,' . $this->student,
             'address' => 'sometimes|nullable|string|max:255',
             'phone' => 'sometimes|nullable|string|max:15',
             'admission_date' => 'sometimes|required|date',

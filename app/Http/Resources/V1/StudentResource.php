@@ -15,18 +15,17 @@ class StudentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->student_id,
             'userID' => $this->user_id,
-            'classID' => $this->class_id,
-            'section' => $this->section,
-            'rollNumber' => $this->roll_number,
+            'firstName' => $this->first_name,
+            'lastName' => $this->last_name,
             'dateOfBirth' => $this->date_of_birth,
-            'parentID' => $this->parent_id,
+            'rollNumber' => $this->roll_number,
             'address' => $this->address,
             'phone' => $this->phone,
             'admissionDate' => $this->admission_date,
-            'user' => new UserResource($this->whenLoaded('user')),  // Relationship to User
-            'class' => new ClassroomResource($this->whenLoaded('class')), // Relationship to Classroom
+            'class' => $this->whenLoaded('classroom', fn() => $this->classroom->class_name), // Returns className only if the 'classroom' relationship is loaded
+            'section' => $this->whenLoaded('section', fn() => $this->section->section_name), // Relationship to Section
         ];
     }
 }

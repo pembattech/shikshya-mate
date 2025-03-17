@@ -2,16 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::get('dashboard', function () {
+    return view('web.dashboard');
+})->name('dashboard');
+
+Route::prefix('student')->group(function () {
+
+    Route::get('/', function () {
+        return view('web.student.index');
+    })->name('student.index');
+
+    // Route::get('create', 'StudentController@create');
+    // Route::post('store', 'StudentController@store');
+    // Route::get('edit/{id}', 'StudentController@edit');
+    // Route::post('update/{id}', 'StudentController@update');
+    // Route::get('delete/{id}', 'StudentController@delete');
 });

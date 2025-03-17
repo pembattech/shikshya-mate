@@ -15,15 +15,18 @@ class TeacherResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->name,
+            'id' => $this->teacher_id,
             'userId' => $this->user_id,
-            'subject' => $this->subject,
+            'firstName' => $this->first_name,
+            'lastName' => $this->last_name,
+            'schedule' => $this->schedule,
             'phone' => $this->phone,
             'address' => $this->address,
             'position' => $this->position,
             'hireDate' => $this->hire_date,
             'user' => new UserResource($this->whenLoaded('user')),  // Relationship to User
             'classes' => ClassroomResource::collection($this->whenLoaded('classes')), // Relationship to Classroom
+            'subjects' => SubjectResource::collection($this->whenLoaded('subjects')), // Relationship to Subject
         ];
     }
 }

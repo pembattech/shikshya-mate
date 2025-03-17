@@ -17,6 +17,8 @@ class ClassroomResource extends JsonResource
         return [
             'className' => $this->class_name,
             'teacher' => new TeacherResource($this->whenLoaded('teacher')), // Load teacher details
+            'students' => StudentResource::collection($this->whenLoaded('students')), // Load students details
+            'subjects' => SubjectResource::collection($this->whenLoaded('subjects')), // Load subjects details
         ];
     }
 }

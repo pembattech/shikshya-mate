@@ -1,15 +1,66 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+<head>
+    <title>Students List</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                <x-welcome />
-            </div>
-        </div>
-    </div>
-</x-app-layout>
+<body>
+    <h1>Students List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody id="students-table">
+            <!-- Students will be populated here by AJAX -->
+        </tbody>
+    </table>
+
+    <div id="student-details"></div>
+
+    <script>
+        $(document).ready(function() {
+            // Fetch all students and populate the table
+            $.ajax({
+                url: '/api/v1/students',
+                method: 'GET',
+                success: function(response) {
+                    var studentsTable = $('#students-table');
+                    studentsTable.empty();
+                    response.data.forEach(function(student) {
+                        studentsTable.append(
+                            '<tr>' +
+                            '<td>' + student.id + '</td>' +
+                            '<td>' + student.firstName + ' ' + student.lastName + '</td>' +
+                            '<td><button class="details-button" data-id="' + student.id +
+                            '">View Details</button></td>' +
+                            '</tr>'
+                        );
+                    });
+
+                    // Attach click event to the new buttons
+                    $('.details-button').click(function() {
+                        var studentId = $(this).data('id');
+                        $.ajax({
+                            url: '/api/v1/students/' + studentId,
+                            method: 'GET',
+                            success: function(response) {
+                                // console.log(data)
+                                $('#student-details').html(
+                                    '<h2>Student Details</h2>' +
+                                    '<p>ID: ' + response.data.id + '</p>' +
+                                    '<p>Name: ' + response.data.firstName + ' ' + response.data
+                                    .lastName + '</p>' +
+                                    '<p>Email: ' + response.data.email + '</p>'
+                                );
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+</body>

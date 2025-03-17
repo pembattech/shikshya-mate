@@ -10,8 +10,8 @@ class ExamFactory extends Factory
     {
         return [
             'name' => 'Exam ' . $this->faker->word,
-            'class_id' => \App\Models\Classroom::factory(),
-            'subject_id' => \App\Models\Subject::factory(),
+            'class_id' => \App\Models\Classroom::inRandomOrder()->first()->class_id,
+            'subject_id' => \App\Models\Subject::inRandomOrder()->first()->subject_id,
             'exam_date' => $this->faker->dateTimeBetween('now', '+1 month'),
             'total_marks' => 100,
         ];

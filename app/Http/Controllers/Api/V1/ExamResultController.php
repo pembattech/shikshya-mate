@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Api\V1\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\V1\StoreExam_ResultRequest;
 use App\Http\Requests\V1\UpdateExam_ResultRequest;

@@ -9,16 +9,23 @@ class Subject extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'class_id', 'teacher_id'];
+    protected $primaryKey = 'subject_id';
 
-    public function class()
+    protected $fillable = ['subject_name'];
+
+     /**
+     * Get the classroom that owns the section.
+     */
+    public function classroom()
     {
-        return $this->belongsTo(Classroom::class);
+        return $this->belongsTo(Classroom::class, 'class_id', 'class_id');
     }
 
-    public function teacher()
+
+    public function teachers()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsToMany(Teacher::class, 'teacher_subjects', 'subject_id', 'teacher_id');
     }
+    
+
 }
-

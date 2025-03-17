@@ -9,15 +9,17 @@ class Exam extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'class_id';
+
     protected $fillable = ['name', 'class_id', 'subject_id', 'exam_date', 'total_marks'];
 
-    public function class()
+    public function classroom()
     {
-        return $this->belongsTo(Classroom::class);
+        return $this->belongsTo(Classroom::class, 'class_id');
     }
 
-    public function subject()
+    public function subjects()
     {
-        return $this->belongsTo(Subject::class);
+        return $this->belongsTo(Subject::class, 'subject_id');
     }
 }
