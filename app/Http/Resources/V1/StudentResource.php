@@ -15,7 +15,6 @@ class StudentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->student_id,
             'userID' => $this->user_id,
             'firstName' => $this->first_name,
             'lastName' => $this->last_name,
@@ -23,7 +22,10 @@ class StudentResource extends JsonResource
             'rollNumber' => $this->roll_number,
             'address' => $this->address,
             'phone' => $this->phone,
+            'gender' => $this->gender,
             'admissionDate' => $this->admission_date,
+            'status' => $this->status,
+            'slug' => $this->slug,
             'class' => $this->whenLoaded('classroom', fn() => $this->classroom->class_name), // Returns className only if the 'classroom' relationship is loaded
             'section' => $this->whenLoaded('section', fn() => $this->section->section_name), // Relationship to Section
         ];

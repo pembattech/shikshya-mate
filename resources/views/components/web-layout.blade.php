@@ -72,7 +72,7 @@
                         <div id="attendance-btn" class="parent-menu p-2 hover:bg-gray-100 hover:text-[#1d1b16] rounded-lg">
                             Attendance
                         </div>
-                        <di class="mb-2">
+                        <div class="mb-2">
                             <button id="notification-menu-btn"
                                 class="parent-menu w-full text-left p-2 hover:bg-gray-100 hover:text-[#1d1b16] rounded-lg">
                                 Notification <span id="notification-arrow" class="inline-block ml-2">▼</span>
@@ -81,7 +81,7 @@
                                 <div class="p-1 hover:bg-gray-100 hover:text-[#1d1b16] rounded-lg submenu">Push Notification</div>
                                 <div class="p-1 hover:bger:text-[#1d1b16] submenu" gray-100 ho>SMS Notification</div>
                             </div>
-                        </di shadow-lg rounded-lg border border-gray-200 gray-100 ho">
+                        </div>
                 </div>
             </div>
 
@@ -119,7 +119,7 @@
                 });
             </script>
 
-            <div class="main-container w-full p-4 min-h-screen">
+            <div class="main-container w-full p-4 min-h-screen relative">
 
                 {{ $slot }}
 

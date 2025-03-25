@@ -17,14 +17,28 @@ use App\Http\Controllers\Api\V1\ExamController;
 use App\Http\Controllers\Api\V1\SectionController;
 
 
+Route::prefix('v1')->controller(StudentController::class)->group(function () {
+    // Specific routes for student statuses
+    Route::get('/students/pending', 'getpendingStudents');
+    Route::get('/students/approved', 'getapprovedStudents'); //MSG: Not implemented
+    Route::get('/students/rejected', 'getrejectedStudents'); //MSG: Not implemented
+
+    // Dynamic routes for student operations
+    Route::get('/students', 'index');
+    Route::post('/students', 'store');
+    Route::get('/students/{slug}', 'show');
+    Route::put('/students/{slug}', 'update');
+    Route::patch('/students/{slug}', 'update');
+    Route::delete('/students/{slug}', 'destroy');
+
+    Route::post('/students/{slug}/create-user', 'createUserAccount'); //MSG: Not implemented
+    Route::patch('/students/{slug}/approve', 'approveStudent'); //MSG: Not implemented
+    Route::patch('/students/{slug}/reject', 'rejectStudent'); //MSG: Not implemented
+});
+
+
+
 Route::prefix('v1')->group(function () {
-    Route::get('/students', [StudentController::class, 'index']);
-    Route::post('/students', [StudentController::class, 'store']);
-    Route::get('/students/{student}', [StudentController::class, 'show']);
-    Route::put('/students/{student}', [StudentController::class, 'update']);
-    Route::patch('/students/{student}', [StudentController::class, 'update']);
-    Route::delete('/students/{student}', [StudentController::class, 'destroy']);
-    Route::post('/students/{studentId}/create-user', [StudentController::class, 'createUserAccount']);
 
     Route::get('/teachers', [TeacherController::class, 'index']);
     Route::post('/teachers', [TeacherController::class, 'store']);

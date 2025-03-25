@@ -3,6 +3,8 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Classroom;
+use App\Models\Section;
 
 class UpdateStudentRequest extends FormRequest
 {
@@ -11,9 +13,28 @@ class UpdateStudentRequest extends FormRequest
         return true;
     }
 
+    // Modify the request data before validation
+    protected function prepareForValidation()
+    {
+
+        if ($this->has("class_name")) {
+            $classroom = Classroom::where('class_name', $this->class_name)->first();
+            if ($classroom) {
+                $this->merge(['class_id' => $classroom->class_id]);
+            }
+        }
+
+        if ($this->has('section_name')) {
+            $section = Section::where('section_name', $this->section_name)->first();
+            if ($section) {
+                $this->merge(['section_id' => $section->section_id]);
+            }
+        }
+
+    }
+
     public function rules(): array
     {
-        // Check the request method
         if ($this->isMethod('patch')) {
             return $this->patchRules();
         }
@@ -29,8 +50,8 @@ class UpdateStudentRequest extends FormRequest
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
             'date_of_birth' => 'required|date',
-            'class_id' => 'required|exists:classrooms,class_id',
-            'section_id' => 'required|exists:sections,section_id',
+            'class_id' => 'required|integer|exists:classrooms,class_id',
+            'section_id' => 'required|integer|exists:sections,section_id',
             'roll_number' => 'required|string|max:20|unique:students,roll_number,' . $this->student,
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:15',
@@ -46,12 +67,22 @@ class UpdateStudentRequest extends FormRequest
             'first_name' => 'sometimes|required|string|max:50',
             'last_name' => 'sometimes|required|string|max:50',
             'date_of_birth' => 'sometimes|required|date',
-            'class_id' => 'sometimes|required|exists:classrooms,class_id',
-            'section_id' => 'sometimes|required|exists:sections,section_id',
+            'class_id' => 'sometimes|required|integer|exists:classrooms,class_id',
+            'section_id' => 'sometimes|required|integer|exists:sections,section_id',
             'roll_number' => 'sometimes|required|string|max:20|unique:students,roll_number,' . $this->student,
             'address' => 'sometimes|nullable|string|max:255',
             'phone' => 'sometimes|nullable|string|max:15',
             'admission_date' => 'sometimes|required|date',
+        ];
+    }
+
+    public function message()
+    {
+        return [
+            'class_id.required' => 'Class is required.',
+            'class_id.exists' => 'The selected class is invalid.',
+            'section_id.required' => 'Section is required.',
+            'section_id.exists' => 'The selected section does not exist in our records. Please choose a valid section.',
         ];
     }
 }

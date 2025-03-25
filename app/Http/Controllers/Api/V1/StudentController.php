@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Student;
 use App\Models\User;
+use App\Models\Classroom;
+use App\Models\Section;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
@@ -57,7 +59,6 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
-
         try {
             $student = Student::create($request->validated());
 
@@ -87,19 +88,17 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($slug)
     {
-
-
         try {
-            $student = Student::findOrFail($id);
+            $student = Student::where('slug', $slug)->firstOrFail();
             $student->load(['user', 'classroom', 'section']);
 
             return new StudentResource($student);
 
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'message' => "The student with ID {$id} was not found.",
+                'message' => "The student with ID {$slug} was not found.",
             ], 404);
         } catch (\Exception $e) {
             return response()->json([
@@ -112,14 +111,18 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStudentRequest $request, $id)
+    public function update(UpdateStudentRequest $request, $slug)
     {
         try {
-            $student = Student::findOrFail($id);
+
+            $student = Student::where('slug', $slug)->firstOrFail();
 
             $student->update($request->validated());
 
+            $student->load(['classroom', 'section']);
+
             return response()->json([
+                'success' => true,
                 'message' => 'Student updated successfully!',
                 'data' => new StudentResource($student)
             ], 200);
@@ -135,16 +138,16 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
         try {
-            $student = Student::findOrFail($id);
+            $student = Student::where('slug', $slug)->firstOrFail();
             $student->delete();
             return response()->json(['message' => 'Student deleted successfully']);
 
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'message' => "The student with ID {$id} was not found.",
+                'message' => "The student with ID {$slug} was not found.",
             ], 404);
         } catch (\Exception $e) {
             return response()->json([
@@ -154,9 +157,9 @@ class StudentController extends Controller
         }
     }
 
-    public function createUserAccount(CreateStudentUserRequest $request, $id)
+    public function createUserAccount(CreateStudentUserRequest $request, $slug)
     {
-        $student = Student::findOrFail($id);
+        $student = Student::where('slug', $slug)->firstOrFail();
 
         if ($student->user_id) {
             return response()->json(['message' => 'User account already exists.'], 400);
@@ -177,6 +180,43 @@ class StudentController extends Controller
         $student->update(['user_id' => $user->id]);
 
         return response()->json(['message' => 'Student account created successfully!', 'user' => $user]);
+    }
+
+    public function approveStudent($slug)
+    {
+        $student = Student::where('slug', $slug)->firstOrFail();
+        $student->update(['status' => 'approved']);
+
+        // Optional: Send a notification
+        // $student->user->notify(new StudentApprovedNotification());
+
+        return response()->json(['message' => 'Student approved successfully']);
+    }
+
+    public function rejectStudent($slug)
+    {
+        $student = Student::where('slug', $slug)->firstOrFail();
+        $student->update(['status' => 'rejected']);
+
+        return response()->json(['message' => 'Student rejected']);
+    }
+
+    public function getpendingStudents()
+    {
+        $students = Student::pending()->get();
+        return response()->json(['message' => 'Pending students', 'data' => StudentResource::collection($students)]);
+    }
+
+    public function getApprovedStudents() //MSG: Not implemented
+    {
+        $students = Student::approved()->get();
+        return response()->json(['message' => 'Approved students', 'data' => StudentResource::collection($students)]);
+    }
+
+    public function getRejectedStudents() //MSG: Not implemented
+    {
+        $students = Student::rejected()->get();
+        return response()->json(['message' => 'Rejected students', 'data' => StudentResource::collection($students)]);
     }
 
 }

@@ -21,6 +21,7 @@ class StudentFactory extends Factory
             'roll_number' => $this->faker->numerify('###'),
             'address' => $this->faker->address,
             'phone' => $this->faker->phoneNumber,
+            'gender' => $this->faker->randomElement(['male', 'female', 'other']),
             'admission_date' => $this->faker->date(),
         ];
     }

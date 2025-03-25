@@ -26,16 +26,18 @@ class StoreStudentRequest extends FormRequest
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'date_of_birth' => 'required|date',
-            'class_id' => 'required|exists:classrooms,class_id',
-            'section_id' => 'required|exists:sections,section_id',
-            'roll_number' => 'required|string|max:20',
+            'class_id' => 'nullable|exists:classrooms,class_id',
+            'section_id' => 'nullable|exists:sections,section_id',
+            'roll_number' => 'nullable|string|max:20',
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:15',
+            'gender' => 'required|in:male,female,other',
             'admission_date' => 'required|date',
+            'status' => 'required|in:pending,approved,rejected',
         ];
     }
 
-       /**
+    /**
      * Customize the error messages.
      *
      * @return array
