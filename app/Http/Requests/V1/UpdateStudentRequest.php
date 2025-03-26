@@ -75,6 +75,7 @@ class UpdateStudentRequest extends FormRequest
             'phone' => 'sometimes|nullable|string|max:15',
             'gender' => 'sometimes|required|in:male,female,other',
             'admission_date' => 'sometimes|required|date',
+            'status' => 'sometimes|required|in:pending,approved,rejected',
         ];
     }
 

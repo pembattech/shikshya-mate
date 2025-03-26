@@ -280,6 +280,7 @@
                 }
                 if (!isValid) return;
 
+                console.table(formData);
                 // AJAX request
                 $.ajax({
                     url: `${baseUrl}/api/v1/students/${formData.id}`,
@@ -296,6 +297,7 @@
                             $(".std-class_name").text(response.data.class);
                             $(".std-section_name").text(numberToAlphabet(response.data
                                 .section));
+                            $(".std-status").text(response.data.status);
 
                             $("#assignclass-form").animate({
                                 right: "-100%"
