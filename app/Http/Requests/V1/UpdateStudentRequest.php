@@ -55,6 +55,7 @@ class UpdateStudentRequest extends FormRequest
             'roll_number' => 'required|string|max:20|unique:students,roll_number,' . $this->student,
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:15',
+            'gender' => 'required|in:male,female,other',
             'admission_date' => 'required|date',
         ];
     }
@@ -72,6 +73,7 @@ class UpdateStudentRequest extends FormRequest
             'roll_number' => 'sometimes|required|string|max:20|unique:students,roll_number,' . $this->student,
             'address' => 'sometimes|nullable|string|max:255',
             'phone' => 'sometimes|nullable|string|max:15',
+            'gender' => 'sometimes|required|in:male,female,other',
             'admission_date' => 'sometimes|required|date',
         ];
     }

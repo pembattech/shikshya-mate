@@ -181,6 +181,8 @@
         </div>
     </div>
 
+    @include('web.student.edit')
+
     <script>
         $(document).ready(function() {
 
@@ -201,29 +203,37 @@
                 url: `/api/v1/students/${slug}`,
                 method: 'GET',
                 success: function(data) {
-                    $('.std-first_name').text(data.data.firstName || 'Null');
-                    $('.std-last_name').text(data.data.lastName || 'Null');
-                    $('.std-date_of_birth').text(
-                        data.data.dateOfBirth ? new Date(data.data.dateOfBirth).toLocaleDateString(
-                            'en-US', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            }) : 'Null'
-                    );
-                    $('.std-class_name').text(data.data.class || 'Null');
-                    $('.std-section_name').text(numberToAlphabet(data.data.section) || 'Null');
-                    $('.std-roll_number').text(data.data.rollNumber || 'Null');
-                    $('.std-address').text(data.data.address || 'Null');
-                    $('.std-phone').text(data.data.phone || 'Null');
-                    $('.std-gender').text(data.data.gender || 'Null');
-                    $('.std-admission_date').text(data.data.admissionDate || 'Null');
-                    $('.std-status').text(data.data.status || 'Null');
+                    if (data.success) {
 
-                    // appending slug to the form
-                    $('.std-id').val(slug);
+                        $('.std-first_name').text(data.student.firstName || 'Null');
+                        $('.std-last_name').text(data.student.lastName || 'Null');
+                        $('.std-date_of_birth').text(
+                            data.student.dateOfBirth ? new Date(data.student.dateOfBirth)
+                            .toLocaleDateString(
+                                'en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                }) : 'Null'
+                        );
+                        $('.std-class_name').text(data.student.class || 'Null');
+                        $('.std-section_name').text(numberToAlphabet(data.student.section) || 'Null');
+                        $('.std-roll_number').text(data.student.rollNumber || 'Null');
+                        $('.std-address').text(data.student.address || 'Null');
+                        $('.std-phone').text(data.student.phone || 'Null');
+                        $('.std-gender').text(data.student.gender || 'Null');
+                        $('.std-admission_date').text(data.student.admissionDate || 'Null');
+                        $('.std-status').text(data.student.status || 'Null');
 
-                    $('#student-detail').removeClass('hidden');
+                        // appending slug to the form
+                        $('.std-id').val(slug);
+
+                        $(".edit-student-button").attr("data-std-id", slug);
+
+                        $('#student-detail').removeClass('hidden');
+
+                    }
+                    // TODO: show message when the response return success false.
                 },
                 error: function(error) {
                     console.log('Error fetching student data:', error);
@@ -253,6 +263,7 @@
                     id: $(".std-id").val(),
                     class_name: $("#class_name").val(),
                     section_name: $("#section_name").val(),
+                    status: 'approved'
                 };
 
                 $(".error").addClass("hidden");
@@ -280,9 +291,7 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        console.log(response);
                         if (response.success) {
-
 
                             $(".std-class_name").text(response.data.class);
                             $(".std-section_name").text(numberToAlphabet(response.data

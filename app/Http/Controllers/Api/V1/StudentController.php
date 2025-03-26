@@ -94,14 +94,20 @@ class StudentController extends Controller
             $student = Student::where('slug', $slug)->firstOrFail();
             $student->load(['user', 'classroom', 'section']);
 
-            return new StudentResource($student);
-
+            return response()->json([
+                'success' => true,
+                'message' => 'Student details retrieved successfully',
+                'student' => new StudentResource($student)
+            ], 201);
+            
         } catch (ModelNotFoundException $e) {
             return response()->json([
+                'success' => false,
                 'message' => "The student with ID {$slug} was not found.",
             ], 404);
         } catch (\Exception $e) {
             return response()->json([
+                'success' => false,
                 'message' => 'An unexpected error occurred',
                 'error' => $e->getMessage()
             ], 500);
