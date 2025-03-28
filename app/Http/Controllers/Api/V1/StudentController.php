@@ -30,7 +30,7 @@ class StudentController extends Controller
         $filter = new StudentFilter();
 
         $filterItems = $filter->transform($request);
-        $studentsQuery = Student::query();
+        $studentsQuery = Student::query()->where('status', 'approved');
 
         foreach ($filterItems as $filterItem) {
             if ($filterItem[0] === 'class') {
@@ -63,22 +63,26 @@ class StudentController extends Controller
             $student = Student::create($request->validated());
 
             return response()->json([
+                'success' => true,
                 'message' => 'Student created successfully',
                 'student' => new StudentResource($student)
             ], 201);
 
         } catch (ValidationException $e) {
             return response()->json([
+                'success' => false,
                 'message' => 'Validation failed',
                 'errors' => $e->errors()
             ], 422);
         } catch (QueryException $e) {
             return response()->json([
+                'success' => false,
                 'message' => 'Database error occurred',
                 'error' => $e->getMessage()
             ], 500);
         } catch (\Exception $e) {
             return response()->json([
+                'success' => false,
                 'message' => 'An unexpected error occurred',
                 'error' => $e->getMessage()
             ], 500);

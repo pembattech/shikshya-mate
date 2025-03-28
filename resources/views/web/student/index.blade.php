@@ -100,6 +100,7 @@
                                     <th class="border border-gray-300 p-2">Name</th>
                                     <th class="border border-gray-300 p-2">Roll No</th>
                                     <th class="border border-gray-300 p-2">Status</th>
+                                    <th class="border border-gray-300 p-2">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="studentTableBody"></tbody>
@@ -128,9 +129,25 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        console.log(response.data);
-                        students = response.data;
-                        renderTable(students);
+                    $("#studentTableContainer").removeClass("hidden");
+
+                    $("#newStudentsTableContainer").addClass("hidden");
+
+                        if (response.data && response.data.length > 0) {
+                            students = response.data;
+                            renderTable(students);
+                        } else {
+
+                            if (!response.data || response.data.length === 0) {
+                                
+                                $("#studentTableBody").html(`
+                                <tr>
+                                    <td colspan="5" class="text-black text-center p-4">No students found</td>
+                                    </tr>
+                                    `);
+
+                            }
+                        }
                     },
                     error: function(error) {
                         console.error("Error fetching students:", error);
@@ -147,7 +164,6 @@
                 if (selectedClass && selectedSection) {
                     $("#selectedClass").text(selectedClass);
                     $("#selectedSection").text(selectedSection);
-                    $("#studentTableContainer").removeClass("hidden");
                     loadStudents(selectedClass, selectedSection); // Reload students with filters
                 } else {
                     $("#studentTableContainer").addClass("hidden");
@@ -185,9 +201,15 @@
                     $("#studentTableBody").append(`
                             <tr>
                                 <td class="border border-gray-300 p-2">${index + 1}</td>
-                                <td class="border border-gray-300 p-2">${student.firstName} ${student.secondName}</td>
+                                <td class="border border-gray-300 p-2">${student.firstName} ${student.lastName}</td>
                                 <td class="border border-gray-300 p-2">${student.rollNumber}</td>
                                 <td class="border border-gray-300 p-2">${student.status}</td>
+                                <td class="border border-gray-300 p-2">
+                                      <button data-id=${student.slug} class="view-student-button bg-black text-white py-2 px-4 rounded-md hover:rounded-none hover:pl-4 transition-all relative group w-20">
+                                        <span class="absolute inset-y-0 left-0 flex items-center opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" aria-hidden="true" class="btn-builtin-icon css-bni7vm"><path fill="currentColor" fill-rule="evenodd" d="M12.522 4.25 20 12l-7.478 7.75-.733-.709 6.302-6.531H4v-1.02h14.09L11.79 4.959z" clip-rule="evenodd"></path></svg></span>
+                                        <span class="group-hover:ml-4 transition-all">View</span>
+                                    </button>
+                                </td>
                             </tr>
                         `);
                 });

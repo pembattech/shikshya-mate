@@ -137,6 +137,12 @@
                     }
                     // TODO: show message when the response return success false.
 
+                    $("#assignclass-form").animate({
+                        right: "-100%"
+                    }, 300, function() {
+                        $(this).hide();
+                    });
+
                     $("#editstudent-form").removeClass('translate-x-full').addClass(
                         'translate-x-0');
                 },

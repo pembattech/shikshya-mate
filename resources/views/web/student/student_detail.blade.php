@@ -246,6 +246,8 @@
                 }).show().animate({
                     right: "0"
                 }, 300);
+
+                $("#editstudent-form").removeClass('translate-x-0').addClass('translate-x-full');
             });
 
             $("#closeForm").click(function() {

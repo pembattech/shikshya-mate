@@ -156,8 +156,19 @@
                             'content')
                     },
                     success: function(response) {
-                        console.log(response);
-                        $('#addStudentModal').addClass('hidden');
+                        if (response.success) {
+
+                            console.log(response);
+                            $('#addStudentModal').addClass('hidden');
+
+                            // Reset form
+                            $('#addStudentForm').trigger('reset');
+
+                            window.location.href = `/student/detail/${response.student.slug}`;
+
+                        }
+
+                        // TODO: Handle success == false case
                     },
                     error: function(xhr) {
                         const errors = xhr.responseJSON.errors;
