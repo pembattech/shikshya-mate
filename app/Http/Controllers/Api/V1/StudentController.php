@@ -102,7 +102,7 @@ class StudentController extends Controller
                 'success' => true,
                 'message' => 'Student details retrieved successfully',
                 'student' => new StudentResource($student)
-            ], 201);
+            ], 200);
             
         } catch (ModelNotFoundException $e) {
             return response()->json([
@@ -153,7 +153,7 @@ class StudentController extends Controller
         try {
             $student = Student::where('slug', $slug)->firstOrFail();
             $student->delete();
-            return response()->json(['message' => 'Student deleted successfully']);
+            return response()->json(['message' => 'Student deleted successfully'], 204);
 
         } catch (ModelNotFoundException $e) {
             return response()->json([
